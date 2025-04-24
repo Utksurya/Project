@@ -112,6 +112,13 @@ app.use("/",userRouter);
 app.use((err,req,res,next) => {
   res.send("Something went wrong");
 })
+
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
 });
