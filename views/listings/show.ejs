@@ -1,4 +1,76 @@
 <% layout("/layouts/boilerplate") %>
+
+<style>
+  .show-img {
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .show-card {
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #fdfdfd;
+  }
+
+  .card-img-container {
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .btns .btn {
+    width: 120px;
+  }
+
+  form textarea {
+    resize: vertical;
+  }
+
+  .starability-slot label {
+    margin-right: 8px;
+  }
+
+  .card.col-5 {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+  }
+
+  #map {
+    height: 350px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  hr {
+    border-top: 2px solid #bbb;
+  }
+
+  h3, h4 {
+    font-weight: 600;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    color: #343a40;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+  }
+</style>
+
+
+
 <div class="row mt-3">
   <div class="col-8 offset-2">
     <h3><%= listing.title %></h3>

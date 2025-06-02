@@ -10,10 +10,20 @@ const upload = multer({storage});
 
 //Index Route
 router.get("/", wrapAsync (async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
-  }));
-  
+    const { location } = req.query;
+
+    let allListings;
+    if (location) {
+        allListings = await Listing.find({
+            location: { $regex: location, $options: "i" } // partial, case-insensitive match
+        });
+    } else {
+        allListings = await Listing.find({});
+    }
+
+    res.render("listings/index.ejs", { allListings, searchQuery: location || "" });
+}));
+
 //New Route
 router.get("/new",isLoggedIn, (req, res) => {
     res.render("listings/new.ejs");
