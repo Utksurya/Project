@@ -9,6 +9,11 @@ const upload = multer({storage});
 
 
 //Index Route
+// router.get("/", wrapAsync (async (req, res) => {
+//     const allListings = await Listing.find({});
+//     res.render("listings/index.ejs", { allListings });
+//   }));
+  
 router.get("/", wrapAsync (async (req, res) => {
     const { location } = req.query;
 
@@ -23,6 +28,9 @@ router.get("/", wrapAsync (async (req, res) => {
 
     res.render("listings/index.ejs", { allListings, searchQuery: location || "" });
 }));
+
+
+
 
 //New Route
 router.get("/new",isLoggedIn, (req, res) => {
