@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js");
+const Booking = require("../models/booking.js");
 const {isLoggedIn} = require("../middleware.js");
 const multer = require("multer");
 const {storage} = require("../cloudConfig.js");
@@ -100,5 +101,54 @@ router.delete("/:id", isLoggedIn, async (req, res) => {
     req.flash("success", "Listing Deleted");
     res.redirect("/listings");
 });
+
+// POST: Handle booking
+router.post("/:id/book", isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const { startDate, endDate } = req.body;
+
+    const listing = await Listing.findById(id);
+    if (!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
+
+    const booking = new Booking({
+        user: req.user._id,
+        listing: id,
+        startDate,
+        endDate,
+    });
+
+    await booking.save();
+    req.flash("success", "Property booked successfully!");
+    res.redirect(`/listings/${id}`);
+});
+
+// Booking route to create a new booking for a listing
+router.post("/:id/bookings", isLoggedIn, wrapAsync(async (req, res) => {
+  const { id } = req.params; // listing id
+  const { startDate, endDate } = req.body;
+
+  // Validate dates: startDate must be before endDate
+  if (new Date(startDate) >= new Date(endDate)) {
+    req.flash("error", "End date must be after start date");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  // Create booking
+  const booking = new Booking({
+    listing: id,
+    user: req.user._id,
+    startDate,
+    endDate,
+  });
+
+  await booking.save();
+
+  req.flash("success", "Booking successful!");
+  res.redirect(`/listings/${id}`);
+}));
+
 
 module.exports = router;
