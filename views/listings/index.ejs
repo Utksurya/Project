@@ -1,60 +1,116 @@
-<% layout("/layouts/boilerplate") %>  
+<% layout("/layouts/boilerplate") %>
   <!-- <h3>All listings</h3> -->
-    
-    <style> 
-      #filters{
-        display: flex;
-        flex-wrap: wrap;
-      }
-      .filter{
-        margin-top: 1rem;
-        margin-right: 2rem;
-        text-align: center;
-        opacity: 0.7;
-      }
-      .filter:hover{
-        opacity: 1;
-        cursor: pointer;
-      }
-      .filter p{
-        font-size: 0.8rem;
-      }
-    </style>
-    <div id="filters">
-      <div class="filter">
-          <div><i class="fa-solid fa-fire"></i></div>
-          <p>Trending</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-      </div>
-      <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Pools</p>
-   `  </div>
-    </div>
 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-      <% for(let listing of allListings) { %>
+  <style>
+    
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .filter {
+      margin-top: 1rem;
+      margin-right: 2rem;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .filter p {
+      font-size: 0.8rem;
+    }
+  .filter-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+  }
+
+  .filter-pill:hover {
+    background-color: #e2e6ea;
+    cursor: pointer;
+  }
+
+  .filter-pill.active {
+    border-color: #212529;
+    background-color: #dee2e6;
+    font-weight: 600;
+  }
+
+  .filter-icon {
+    font-size: 1.2rem;
+  }
+</style>
+
+<div class="container mt-4">
+  <div id="filters" class="d-flex gap-3 flex-wrap justify-content-start mb-4">
+  
+
+  <a href="/listings?category=room" class="text-decoration-none text-dark">
+    <div class="filter-pill <%= selectedCategory === 'room' ? 'active' : '' %>">
+      <i class="fa-solid fa-bed filter-icon"></i>
+      <span>Rooms</span>
+    </div>
+  </a>
+
+  <a href="/listings?category=pool" class="text-decoration-none text-dark">
+    <div class="filter-pill <%= selectedCategory === 'pool' ? 'active' : '' %>">
+      <i class="fa-solid fa-person-swimming filter-icon"></i>
+      <span>Pools</span>
+    </div>
+  </a>
+
+  <a href="/listings?category=villa" class="text-decoration-none text-dark">
+    <div class="filter-pill <%= selectedCategory === 'villa' ? 'active' : '' %>">
+      <i class="fa-solid fa-house-chimney filter-icon"></i>
+      <span>Villa</span>
+    </div>
+  </a>
+
+  <a href="/listings?category=apartment" class="text-decoration-none text-dark">
+    <div class="filter-pill <%= selectedCategory === 'apartment' ? 'active' : '' %>">
+      <i class="fa-solid fa-building filter-icon"></i>
+      <span>Apartment</span>
+    </div>
+  </a>
+
+  <a href="/listings?category=pg" class="text-decoration-none text-dark">
+    <div class="filter-pill <%= selectedCategory === 'pg' ? 'active' : '' %>">
+      <i class="fa-solid fa-user-group filter-icon"></i>
+      <span>PG</span>
+    </div>
+  </a>
+</div>
+
+
+
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <% for(let listing of allListings) { %>
       <a href="/listings/<%= listing._id %>" class="listing-link">
         <div class="card col listing-card">
-          <img 
-            src="<%= listing.image.url%>" 
-            class="card-img-top" 
-            alt="listing_image" 
-            style="height: 20rem;"
-          />
+          <img src="<%= listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;" />
           <div class="card-img-overlay"></div>
           <div class="card-body">
             <p class="card-text">
-              <b><%= listing.title %></b><br>
+              <b>
+                <%= listing.title %>
+              </b><br>
               &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
             </p>
           </div>
         </div>
-        </a>
-        <% } %>
-    </div>
-
+      </a>
+      <% } %>
+  </div>
+</div>
 

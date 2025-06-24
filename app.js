@@ -24,6 +24,8 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 
+
+
 const dbUrl = process.env.ATLASDB_URL;
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -109,10 +111,11 @@ app.use("/",userRouter);
 
 
 
-app.use((err,req,res,next) => {
-  res.send("Something went wrong");
-})
-
+app.use((err, req, res, next) => {
+  console.error("💥 ERROR:", err.stack);
+  req.flash("error", err.message || "Something went wrong!");
+  res.redirect("back");
+});
 
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "index.html"));

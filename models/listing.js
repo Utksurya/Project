@@ -15,21 +15,30 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String,
+  category: {
+  type: String,
+  enum: ['trending', 'room', 'pool', 'villa', 'apartment','pg'],
+  required: true
+},
   reviews: [{
     type: Schema.Types.ObjectId,
     ref: "Review",
   }],
+  bookings: [{
+    type: Schema.Types.ObjectId,
+    ref: "Booking", 
+  }],
   owner: {
     type: Schema.Types.ObjectId,
-    ref:"User",
-  }
-});
+    ref: "User",
+  },
+}, { timestamps: true });
 
 listingSchema.post("findOneAndDelete", async(listing) => {
   if(listing){
-    await Review.deleteMany({_id : {$in: listing.reviews}});
+    await Review.deleteMany({ _id: { $in: listing.reviews } });
   }
-})
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;

@@ -15,7 +15,7 @@ const { isLoggedIn, isReviewAuthor } = require("../middleware.js");
         await newReview.save();
         await listing.save();
 
-        req.flash("success", "New review created");
+        // req.flash("success", "New review created");
         res.redirect(`/listings/${listing._id}`);
     })
 

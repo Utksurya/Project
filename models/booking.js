@@ -19,7 +19,19 @@ const bookingSchema = new Schema({
     endDate: {
         type: Date,
         required: true
+    },
+    bookings: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking"
+        }
+    ],
+    status: {
+        type: String,
+        enum: ['pending', 'confirmed', 'rejected'],
+        default: 'pending'
     }
+
 }, { timestamps: true });
 
 const Booking = mongoose.model("Booking", bookingSchema);

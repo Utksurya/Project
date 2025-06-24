@@ -32,7 +32,8 @@
             <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
           </form> -->
         <form class="d-flex" role="search" method="GET" action="/listings">
-          <input class="form-control me-2" type="search" placeholder="Search" name="location" required value="<%= typeof location !== 'undefined' ? location : '' %>" />
+          <input class="form-control me-2" type="search" placeholder="Search Location" name="location" required
+            value="<%= typeof location !== 'undefined' ? location : '' %>" />
           <button class="btn btn-search" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>Search
           </button>
@@ -40,14 +41,17 @@
       </div>
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
-        <% if(!currUser){ %>
+
+        <% if (!currUser) { %>
           <a class="nav-link" href="/signup"><b>Sign up</b></a>
-          <a class="nav-link" href="/login"><b>login</b></a>
-          <% } %>
-            <% if(currUser){ %>
-              <a class="nav-link" href="/logout"><b>logout</b></a>
-              <% } %>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+          <% } else { %>
+            <!-- Only visible to logged-in users -->
+            <a class="nav-link" href="/listings/dashboard">Dashboard</a>
+            <a class="nav-link" href="/logout"><b>Logout</b></a>
+            <% } %>
       </div>
+
     </div>
   </div>
 </nav>
